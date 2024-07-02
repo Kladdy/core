@@ -6,7 +6,7 @@ from models import datetime_converter
 from models.reactor_operating_data import ReactorOperatingData
 from pages import theme
 
-@ui.page('/other_page')
+@ui.page('/reactor_operating_data')
 def reactor_operating_data():
     with theme.frame():
         with ui.row():

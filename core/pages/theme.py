@@ -13,7 +13,7 @@ class Endpoint:
 
 endpoints = [
     Endpoint("Hem", "home", "/"),
-    Endpoint("Driftdata för kärnreaktorer", "factory", "/reactor_operating_data"),
+    Endpoint("Reaktordriftdata", "factory", "/reactor_operating_data"),
 ]
 
 def menu_icon(endpoint: Endpoint):

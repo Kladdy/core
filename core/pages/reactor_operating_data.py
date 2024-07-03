@@ -17,10 +17,12 @@ def reactor_operating_data():
                 y = [data_point.value_percent for data_point in reactor.data_points]
 
                 # Loop over all x values. If there is more than 20 minutes between two x values, insert that time in x and a None value in y
-                for i in range(len(x) - 1):
+                i = 0
+                while i < len(x) - 1:
                     if x[i] + timedelta(minutes=20) < x[i + 1]:
                         x.insert(i + 1, x[i] + timedelta(minutes=20))
                         y.insert(i + 1, None)
+                    i += 1
 
                 fig = go.Figure(go.Scatter(x=x, y=y), layout=go.Layout(yaxis=dict(range=[0, 100])))
                 fig.update_layout(margin=dict(l=0, r=0, t=0, b=0))

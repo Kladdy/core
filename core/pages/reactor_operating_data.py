@@ -16,11 +16,14 @@ def reactor_operating_data():
                 x = [datetime_converter.utc_to_local(data_point.timestamp) for data_point in reactor.data_points]
                 y = [data_point.value_percent for data_point in reactor.data_points]
 
-                # Loop over all x values. If there is more than 15 minutes between two x values, insert that time in x and a None value in y. This breaks the plot line if data is missing. Updates are expected every 10 minutes. 
+                # Time window to allow values to not exist over before inserting null values
+                time_window = 180
+
+                # Loop over all x values. If there is more than time_window minutes between two x values, insert that time in x and a None value in y. This breaks the plot line if data is missing. Updates are expected every 10 minutes. 
                 i = 0
                 while i < len(x) - 1:
-                    if y[i] != None and x[i] + timedelta(minutes=15) < x[i + 1]:
-                        x.insert(i + 1, x[i] + timedelta(minutes=15))
+                    if y[i] != None and x[i] + timedelta(minutes=time_window) < x[i + 1]:
+                        x.insert(i + 1, x[i] + timedelta(minutes=time_window))
                         y.insert(i + 1, None)
                     i += 1
 

@@ -27,9 +27,9 @@ def reactor_operating_data():
     @ui.refreshable
     def plot_cards(start_local: datetime | None = None, stop_local: datetime | None = None):
         if start_local is None:
-            start_local = datetime_converter.utc_to_local(datetime.now())
+            start_local = datetime.now()
         if stop_local is None:
-            stop_local = datetime_converter.utc_to_local(datetime.now())
+            stop_local = datetime.now()
 
         start_earliest_on_local_day = start_local.replace(hour=0, minute=0, second=0, microsecond=0)
         stop_latest_on_local_day = stop_local.replace(hour=23, minute=59, second=59, microsecond=999999)

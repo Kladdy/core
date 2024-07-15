@@ -8,8 +8,8 @@ from bs4 import BeautifulSoup
 @dataclass
 class ReactorOperatingDataPoint:
     timestamp: datetime
-    value_MW: float
-    value_percent: float
+    mw: float
+    pct: float
 
 @datafile("../data/reactor_operating_data/{self.reactor_label}.yml")
 class ReactorOperatingData:
@@ -18,7 +18,6 @@ class ReactorOperatingData:
     reactor_type: str
     index_in_data: int
     url: str
-    data_points: list[ReactorOperatingDataPoint]
 
     def get_reactor_data(self):
         session = CachedSession('reactor_operating_data', expire_after=timedelta(minutes=0.2))
@@ -28,15 +27,11 @@ class ReactorOperatingData:
         soup = BeautifulSoup(page.content, "html.parser")
         script = soup.select("body > section > script:nth-child(2)")
         timestamp = datetime.fromtimestamp(int(script[0].string.split("timestamp\\\":")[1].split(",")[0]) / 1000.0, UTC)
-        value_MW = float(script[0].string.split("production\\\":")[self.index_in_data].split(",")[0])
-        value_percent = float(script[0].string.split("percent\\\":")[self.index_in_data].split("}")[0])
+        mw = float(script[0].string.split("production\\\":")[self.index_in_data].split(",")[0])
+        pct = float(script[0].string.split("percent\\\":")[self.index_in_data].split("}")[0])
         
-        return ReactorOperatingDataPoint(timestamp, value_MW, value_percent)
+        # Round the values
+        mw = round(mw, 1)
+        pct = round(pct, 1)
 
-    def timestamp_is_present(self, timestamp):
-        for data_point in self.data_points:
-            if data_point.timestamp == timestamp:
-                return True
-        return False
-    
-
+        return ReactorOperatingDataPoint(timestamp, mw, pct)

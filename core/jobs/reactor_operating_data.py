@@ -7,6 +7,7 @@ import http.client
 
 from models import datetime_converter
 from models.reactor_operating_data import ReactorOperatingData
+from time_series_data.reactor_operating_data import add_reactor_operating_data_point, point_is_present
 
 def fetch_reactor_operating_data():
     print("Fetching reactor operating data 🕒")
@@ -14,15 +15,11 @@ def fetch_reactor_operating_data():
         reactor: ReactorOperatingData
         try:
             reactor_data = reactor.get_reactor_data()
-            print(f"{reactor.reactor_name}: {datetime_converter.utc_to_local(reactor_data.timestamp)}, {reactor_data.value_MW:.0f} MW, {reactor_data.value_percent:.1f} %")
+            print(f"{reactor.reactor_name}: {datetime_converter.utc_to_local(reactor_data.timestamp)}, {reactor_data.mw:.0f} MW, {reactor_data.pct:.1f} %")
 
-            if reactor.data_points == Missing:
-                print(f"Data points missing ⚫️")
-                reactor.data_points = []
-
-            if not reactor.timestamp_is_present(reactor_data.timestamp):
+            if not point_is_present(reactor, reactor_data):
+                add_reactor_operating_data_point(reactor, reactor_data)
                 print(f"Added datapoint 🟢")
-                reactor.data_points.append(reactor_data)
             else:
                 print(f"Datapoint present 🔵")
 

@@ -16,5 +16,5 @@ class DateTimeConverter(converters.Converter):
 converters.register(datetime, DateTimeConverter)
 
 # Based on https://stackoverflow.com/a/13287083
-def utc_to_local(utc_dt):
+def utc_to_local(utc_dt: datetime):
     return utc_dt.replace(tzinfo=timezone.utc).astimezone(tz=None)

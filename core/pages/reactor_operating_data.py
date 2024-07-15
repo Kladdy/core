@@ -102,16 +102,5 @@ def reactor_operating_data():
                 with ui.date(value=today_interval_str_dashes, on_change=lambda x: x.value is not None and plot_cards.refresh(*get_dates_from_value_change_event(x))).props(f'''range :options="date => date >= '{start_interval_date_str}' && date <= '{stop_interval_date_str}'"'''):
                     with ui.row().classes('justify-end'):
                         ui.button('Close', on_click=date_range_menu.close).props('flat')
-            
-            # ui.icon('edit_calendar', size="md", color="primary").on('click', date_range_menu.open).classes('cursor-pointer')
 
-            # with ui.input('Date range', value=today_interval_str_dashes, on_change=lambda x: plot_cards.refresh(*get_dates_from_value_change_event(x))) as date_range:
-            #     with ui.menu() as date_range_menu:
-            #         with ui.date().bind_value(date_range).props(f'''range :options="date => date >= '{start_interval_date_str}' && date <= '{stop_interval_date_str}'"'''):
-            #             with ui.row().classes('justify-end'):
-            #                 ui.button('Close', on_click=date_range_menu.close).props('flat')
-            #     with date_range.add_slot('append'):
-            #         ui.icon('edit_calendar').on('click', date_range_menu.open).classes('cursor-pointer')
-
-        # Plot cards
         plot_cards()

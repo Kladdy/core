@@ -96,8 +96,10 @@ def reactor_operating_data():
                         y.insert(i + 1, None)
                     i += 1
 
+                max_y_axis = max(100, max(y)) + 10
                 fig = go.Figure(
-                    go.Scatter(x=x, y=y), layout=go.Layout(yaxis=dict(range=[0, 100]))
+                    go.Scatter(x=x, y=y),
+                    layout=go.Layout(yaxis=dict(range=[0, max_y_axis])),
                 )
                 fig.update_layout(margin=dict(l=0, r=0, t=0, b=0))
                 with ui.card():

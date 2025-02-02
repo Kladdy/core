@@ -1,2 +1,2 @@
 *.sqlite
-data
+data/reactor_operating_data/tinyflux.csv

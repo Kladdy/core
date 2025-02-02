@@ -1,0 +1,5 @@
+reactor_name: Ringhals 3
+reactor_type: PWR
+index_in_json_list: 1
+index_in_data: 1
+url: https://group.vattenfall.com/se/var-verksamhet/vara-energislag/karnkraft/aktuell-karnkraftsproduktion

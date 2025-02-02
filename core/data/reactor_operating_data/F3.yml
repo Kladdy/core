@@ -1,0 +1,5 @@
+reactor_name: Forsmark 3
+reactor_type: BWR
+index_in_json_list: 0
+index_in_data: 3
+url: https://group.vattenfall.com/se/var-verksamhet/vara-energislag/karnkraft/aktuell-karnkraftsproduktion

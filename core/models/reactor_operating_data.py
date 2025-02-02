@@ -18,6 +18,7 @@ class ReactorOperatingData:
     reactor_label: str
     reactor_name: str
     reactor_type: str
+    index_in_json_list: int
     index_in_data: int
     url: str
 
@@ -31,16 +32,14 @@ class ReactorOperatingData:
 
         page = session.get(self.url, headers=headers)
         soup = BeautifulSoup(page.content, "html.parser")
-        script = soup.select("body > section > script:nth-child(2)")
-        timestamp = datetime.fromtimestamp(
-            int(script[0].string.split('timestamp\\":')[1].split(",")[0]) / 1000.0, UTC
+        script_tags_with_json = soup.find_all("script", {"type": "application/json"})
+        json_contents = [tag.string for tag in script_tags_with_json]
+        json_content = json_contents[self.index_in_json_list]
+        timestamp = datetime.fromisoformat(
+            json_content.split('timestamp":')[1].split(",")[0].strip('"')
         )
-        mw = float(
-            script[0].string.split('production\\":')[self.index_in_data].split(",")[0]
-        )
-        pct = float(
-            script[0].string.split('percent\\":')[self.index_in_data].split("}")[0]
-        )
+        mw = float(json_content.split('production":')[self.index_in_data].split(",")[0])
+        pct = float(json_content.split('percent":')[self.index_in_data].split("}")[0])
 
         # Round the values
         mw = round(mw, 1)

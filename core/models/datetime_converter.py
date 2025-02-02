@@ -1,6 +1,8 @@
 # Based on https://datafiles.readthedocs.io/en/latest/types/custom/
-from datafiles import converters
 from datetime import datetime, timezone
+
+from datafiles import converters
+
 
 class DateTimeConverter(converters.Converter):
     @classmethod
@@ -13,7 +15,9 @@ class DateTimeConverter(converters.Converter):
         # Convert file value back into a `datetime` object
         return datetime.fromisoformat(deserialized_data)
 
+
 converters.register(datetime, DateTimeConverter)
+
 
 # Based on https://stackoverflow.com/a/13287083
 def utc_to_local(utc_dt: datetime):

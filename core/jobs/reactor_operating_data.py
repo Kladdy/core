@@ -1,13 +1,17 @@
-import threading
-from .every import every
-
-import time
-from datafiles import Missing
 import http.client
+import threading
+import time
 
+from datafiles import Missing
 from models import datetime_converter
 from models.reactor_operating_data import ReactorOperatingData
-from time_series_data.reactor_operating_data import add_reactor_operating_data_point, point_is_present
+from time_series_data.reactor_operating_data import (
+    add_reactor_operating_data_point,
+    point_is_present,
+)
+
+from .every import every
+
 
 def fetch_reactor_operating_data():
     print("Fetching reactor operating data 🕒")
@@ -15,7 +19,9 @@ def fetch_reactor_operating_data():
         reactor: ReactorOperatingData
         try:
             reactor_data = reactor.get_reactor_data()
-            print(f"{reactor.reactor_name}: {datetime_converter.utc_to_local(reactor_data.timestamp)}, {reactor_data.mw:.0f} MW, {reactor_data.pct:.1f} %")
+            print(
+                f"{reactor.reactor_name}: {datetime_converter.utc_to_local(reactor_data.timestamp)}, {reactor_data.mw:.0f} MW, {reactor_data.pct:.1f} %"
+            )
 
             if not point_is_present(reactor, reactor_data):
                 add_reactor_operating_data_point(reactor, reactor_data)
@@ -27,4 +33,5 @@ def fetch_reactor_operating_data():
             print(f"Datapoint not added 🔴")
             print(f"Error: {e}")
 
-threading.Thread(target=lambda: every(5*60, fetch_reactor_operating_data)).start()
+
+threading.Thread(target=lambda: every(5 * 60, fetch_reactor_operating_data)).start()

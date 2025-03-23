@@ -165,3 +165,8 @@ cython_debug/
 
 # OS files
 .DS_Store
+
+
+
+#
+tinyflux*.csv*

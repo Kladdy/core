@@ -170,3 +170,5 @@ cython_debug/
 
 #
 tinyflux*.csv*
+
+app

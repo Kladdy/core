@@ -14,6 +14,9 @@ from tinyflux import Point
 
 @ui.page("/reactor_operating_data")
 def reactor_operating_data():
+    ui.navigate.to(
+        "https://group.vattenfall.com/se/var-verksamhet/vara-energislag/karnkraft/aktuell-karnkraftsproduktion"
+    )
 
     def get_dates_from_value_change_event(event: events.ValueChangeEventArguments):
         if type(event.value) == str:
